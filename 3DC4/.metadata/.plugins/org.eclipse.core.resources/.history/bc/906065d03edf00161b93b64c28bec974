@@ -1,0 +1,5 @@
+package viewTUI;
+
+public class BoardTUIView implements BoardInterface {
+
+}

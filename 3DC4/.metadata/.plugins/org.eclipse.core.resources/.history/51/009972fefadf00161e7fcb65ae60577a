@@ -1,0 +1,85 @@
+package Model;
+
+import java.util.Scanner;
+
+public class Player {
+
+	private String name;
+	private Disc.Color disc;
+	private int score;
+	public Board board;
+
+	/*
+	 * Constructor creates a Player with a name and a disc
+	 */
+
+	public Player(String name, Disc.Color disc) {
+		this.name = name;
+		this.disc = disc;
+		this.score = 0;
+
+	}
+
+	/**
+	 * 
+	 * @return name
+	 */
+
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * 
+	 * @return disc object
+	 */
+	public Disc.Color getDisc() {
+		return disc;
+	}
+
+	/**
+	 * 
+	 * @return score
+	 */
+
+	public int getScore() {
+		return score;
+	}
+
+	/**
+	 * Ask the player for input to put the disc in checks if col is nor full
+	 * 
+	 * 
+	 * @param board
+	 */
+
+	public void makeMove(Disc.Color[][] board) {
+
+		Disc.Color disc = getDisc();
+		System.out.println("Drop a disc (0-6) :");
+		try (Scanner input = new Scanner(System.in)) {
+			int columnPosition = input.nextInt();
+			dropDisc(board, columnPosition, disc);
+
+		}
+	}
+
+	/**
+	 * Checkks a row if it is full and places a disc if it cannot drop a disc it
+	 * returns false
+	 * 
+	 * 
+	 * @param board
+	 * @param columnPosition
+	 * @param disc
+	 */
+	public void dropDisc(Disc.Color[][] board, int columnPosition, Disc.Color disc) {
+		for (int i = board.length - 1; i >= 0; i--) {
+			if (board[i][columnPosition] == Disc.Color.EMPTY) {
+				board[i][columnPosition] = disc;
+
+			}
+
+		}
+	}
+}

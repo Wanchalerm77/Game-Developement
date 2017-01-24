@@ -1,0 +1,14 @@
+package networkConnection;
+
+import java.awt.Color;
+
+public class Server {
+	public static void main(String[] args) {
+		Random r = new Random();
+		Color c = new Color(, g, b)
+		System.out.println(c);
+		
+		
+	}
+
+}

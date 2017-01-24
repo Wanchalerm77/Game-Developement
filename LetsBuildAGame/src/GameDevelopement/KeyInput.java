@@ -1,0 +1,29 @@
+package GameDevelopement;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+public class KeyInput extends KeyAdapter {
+	Handler e;
+
+	public KeyInput(Handler e) {
+		// TODO Auto-generated constructor stub
+		this.e = e;
+
+	}
+
+	public void keyPressed(KeyEvent o) {
+		int key = o.getKeyCode();
+
+		System.out.println(key);
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		super.keyReleased(e);
+		System.out.println(e);
+	}
+
+}

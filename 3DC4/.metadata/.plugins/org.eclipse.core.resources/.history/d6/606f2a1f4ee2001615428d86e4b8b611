@@ -1,0 +1,251 @@
+package controller;
+
+import java.util.Scanner;
+
+import Model.Board;
+import Model.Disc.Color;
+import Model.Player;
+import Model.PlayerList;
+
+public class Game {
+
+	public static int NUMBER_OF_PLAYERS = 2;
+
+	private Board board;
+
+	private PlayerList playerlist;
+
+	private int current;
+
+	private int[] lastMove;
+
+	/**
+	 * 
+	 * @param p1
+	 * @param p2
+	 */
+
+	public Game(Player p1, Player p2) {
+		// TODO Auto-generated constructor stub
+		board = new Board();
+		playerlist = new PlayerList();
+		current = 0;
+		playerlist.player.add(p1);
+		playerlist.player.add(p2);
+		lastMove = new int[2];
+
+	}
+
+	/**
+	 * starts the game resets the game and allows us to play it while play ==
+	 * true
+	 */
+
+	public void start() {
+		boolean keepPlaying = true;
+		while (keepPlaying) {
+
+			reset();
+			play();
+			keepPlaying = readBoolean("\n> Play another time? (y/n)?", "y", "n");
+		}
+
+	}
+
+	/**
+	 * 
+	 * @param prompt
+	 * @param yes
+	 * @param no
+	 * @return
+	 */
+
+	private boolean readBoolean(String prompt, String yes, String no) {
+		String answer;
+		do {
+			System.out.print(prompt);
+			Scanner in = new Scanner(System.in);
+			answer = in.hasNextLine() ? in.nextLine() : null;
+		} while (answer == null || (!answer.equals(yes) && !answer.equals(no)));
+
+		return answer.equals(yes);
+
+	}
+
+	/**
+	 * 
+	 */
+
+	private void reset() {
+		current = 0;
+		board.showCopy();
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+
+	public boolean hasWinner() {
+
+		boolean haveWinner = false;
+		for (Player tempList : playerlist.getPlayers()) {
+			Color d = tempList.getDisc();
+			haveWinner = isWinner(d) ? true : false;
+		}
+
+		return haveWinner;
+
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+
+	public boolean gameOver() {
+		return (isFull() || hasWinner());
+
+	}
+
+	public boolean isFull() {
+		boolean test = false;
+		int counter = 0;
+		for (Color[][] i : board.allLayers) {
+			for (int x = 0; x < Board.X; x++) {
+				for (int y = 0; y < Board.Y; y++) {
+					if (!i[x][y].equals(Color.EMPTY)) {
+						counter++;
+
+					}
+
+				}
+			}
+
+		}
+		if (counter == 64) {
+			test = true;
+		}
+
+		return test;
+	}
+
+	/**
+	 * Checks if a row is filled
+	 * 
+	 * 
+	 * @param disc
+	 * @return counter == 4 ? true : false;
+	 */
+
+	public boolean hasColumn(Color disc) {
+		boolean test = false;
+		int counter = 0;
+		for (int y = 0; y < Board.Y; y++) {
+			counter = 0;
+			for (int x = 0; x < Board.X; x++) {
+				for (Color[][] s : board.allLayers) {
+					if (s[x][y].equals(disc)) {
+						counter++;
+					}
+					if (counter == 4) {
+						test = true;
+						break;
+					}
+
+				}
+			}
+
+		}
+
+		return test;
+	}
+
+	/**
+	 * 
+	 * @param disc
+	 * @return
+	 */
+
+	public boolean hasRow(Color disc) {
+
+		boolean test = false;
+		int counter = 0;
+
+		for (Color[][] kewl : board.allLayers) {
+			counter = 0;
+			for (int x = 0; x > Board.X; x++) {
+				for (int y = 0; y > Board.Y; y++) {
+					if (kewl[x][y].equals(disc)) {
+						counter++;
+
+					}
+					if (counter == 4) {
+						test = true;
+						return test;
+					}
+
+				}
+			}
+		}
+
+		for (Color[][] gewd : board.allLayers) {
+			counter = 0;
+			for (int y = 0; y > Board.Y; y++) {
+				for (int x = 0; y > Board.X; x++) {
+					if (gewd[y][x].equals(disc)) {
+						counter++;
+
+					}
+					if (counter == 4) {
+						test = true;
+						return test;
+					}
+				}
+			}
+		}
+		return test;
+
+	}
+
+	/**
+	 * 
+	 * @param disc
+	 * @return
+	 */
+
+	public boolean hasDiagonal(Color disc) {
+		return false;
+
+	}
+
+	/**
+	 * 
+	 * @param d
+	 * @return
+	 */
+	public boolean isWinner(Color d) {
+
+		return hasColumn(d) || hasRow(d) || hasDiagonal(d);
+
+	}
+
+	/**
+	 * Runs the game as long as the board is not full or no one won
+	 * 
+	 */
+
+	protected void play() {
+
+		current = (int) Math.round(Math.random());
+		while (!gameOver()) {
+			playerlist.getPlayer(current).makeMove(board);
+			current++;
+			current = current % Game.NUMBER_OF_PLAYERS;
+
+		}
+		board.showCopy();
+
+	}
+
+}

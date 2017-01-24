@@ -1,0 +1,209 @@
+package Model;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+
+import Model.Disc.Color;
+import controller.Game;
+import gameLogic.HumanPlayer;
+
+public class Board extends Observable {
+
+	public static final int X = 4;
+	public static final int Y = 4;
+	public static final int LAYER = 4;
+	private int winsOfP1, winsOfP2 = 0;
+	private Game g;
+	private PlayerList player = new PlayerList();
+
+	private List<Color[][]> allLayers = new ArrayList<>();
+
+	public Color[][] A = new Disc.Color[X][Y];
+	public Color[][] B = new Disc.Color[X][Y];
+	public Color[][] C = new Disc.Color[X][Y];
+	public Color[][] D = new Disc.Color[X][Y];
+
+	public Board() {
+		allLayers.add(A);
+		allLayers.add(B);
+		allLayers.add(C);
+		allLayers.add(D);
+		reset();
+
+	}
+
+	public void reset() {
+		for (Color[][] c : allLayers) {
+			for (int i = 0; i < X; i++) {
+				for (int j = 0; j < Y; j++) {
+					c[i][j] = Color.EMPTY;
+				}
+
+			}
+
+		}
+		setChanged();
+		notifyObservers();
+	}
+
+	public void resetScore() {
+		winsOfP1 = 0;
+		winsOfP2 = 0;
+		setChanged();
+		notifyObservers();
+	}
+
+	public void showCopy() {
+		int index = 0;
+		String[] layer = { "1 - Bottom view", "2", "3", "4 - Top view" };
+
+		for (Color[][] lol : allLayers) {
+			System.out.println("Layer: " + layer[index]);
+
+			for (int k = 0; k < lol.length; k++) {
+				for (int i = 0; i < lol.length; i++) {
+					System.out.print(" |   " + lol[k][i]);
+
+				}
+				System.out.println("");
+				System.out.println("-----------------------------------------");
+			}
+			System.out.println("");
+			System.out.println("");
+			index++;
+
+		}
+
+	}
+
+	/**
+	 * Checks if on that specific postion with the coordinates (x.y) there are
+	 * empty slots left
+	 * 
+	 * @param row
+	 * @param col
+	 * @return Row is full ? false : true;
+	 */
+
+	public boolean canDrop(int x, int y) {
+		boolean test = false;
+		for (Color[][] c : allLayers) {
+			if (c[x][y].equals(Color.EMPTY)) {
+				test = true;
+
+			}
+		}
+		return test;
+	}
+
+	public boolean isFull() {
+		boolean test = false;
+		int counter = 0;
+		for (Color[][] i : allLayers) {
+			for (int x = 0; x < X; x++) {
+				for (int y = 0; y < Y; y++) {
+					if (!i[x][y].equals(Color.EMPTY)) {
+						counter++;
+
+					}
+
+				}
+			}
+
+		}
+		if (counter == 64) {
+			test = true;
+		}
+
+		return test;
+	}
+
+	/**
+	 * Calculates the index of the 4x4 grid to make the placement of Discs
+	 * easier
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+
+	public int index(int x, int y) {
+		return y * 4 + x;
+
+	}
+
+	/**
+	 * Drops a disc at the lowest layer of the board !Does not work prooperly
+	 * yet
+	 * 
+	 * @param board
+	 * @param x
+	 * @param y
+	 * @param disc
+	 */
+
+	public void dropDisc(Board board, int x, int y, Color disc) {
+		for (Color[][] s : allLayers) {
+			if (canDrop(x, y)) {
+				if (s[x][y].equals(Color.EMPTY)) {
+					s[x][y] = disc;
+					break;
+				}
+			}
+		}
+
+	}
+
+	/**
+	 * Returns a layer of the board (0-4)
+	 * 
+	 * @param index
+	 * @return
+	 */
+
+	public Color[][] getLayer(int index) {
+
+		return allLayers.get(index);
+	}
+
+	/**
+	 * 
+	 * @param disc
+	 * @return
+	 */
+
+	public boolean hasColumn(Color disc) {
+		 boolean test = false;
+		 for (int x = 0; x > X; x++) {
+			 for (int y = 0; y > Y; y++) {
+				 for (Color[][] s : allLayers) {
+					 s[x][y]
+										 }
+			 }
+			 
+		 }
+		 
+		 
+
+		return test;
+
+	}
+
+	/**
+	 * returns the score obviously
+	 * 
+	 * @return
+	 */
+
+	public String getScore() {
+		return null;
+	}
+
+	public static void main(String[] args) {
+		Game g = new Game(new HumanPlayer("Non", Disc.Color.BLUE), new HumanPlayer("lol", Disc.Color.GREEN));
+		g.start();
+
+	}
+
+}

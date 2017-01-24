@@ -1,0 +1,45 @@
+package viewTUI;
+
+import Model.Board;
+import Model.Player;
+import controller.Game;
+
+public class BoardTUIView implements BoardInterface {
+
+	@Override
+	public void start() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updatePlayer(Player p) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateBoard(Board b) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateScore(Player p) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void showStatus() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void setGame(Game g) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

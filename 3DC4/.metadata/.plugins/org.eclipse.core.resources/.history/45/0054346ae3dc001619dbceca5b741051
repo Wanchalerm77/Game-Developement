@@ -1,0 +1,16 @@
+package ss.week7.account;
+
+public class AccountSync {
+	
+	public static void main(String[] args) {
+		Account account = new Account();
+		Thread t1 = new MyThread(50, 2, account);
+		Thread t2 = new MyThread(-50, 2, account);
+		
+		t1.start();
+		t2.start();
+		System.out.println(account.getBalance());
+		
+	}
+
+}

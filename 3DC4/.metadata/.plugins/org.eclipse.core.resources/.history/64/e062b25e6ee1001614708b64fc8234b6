@@ -1,0 +1,157 @@
+	public class Position implements Comparable {
+
+		/**
+		 * Instance variable that represents the position on the x-axis
+		 */
+		public int x;
+		/**
+		 * Instance variable that represents the position on the y-axis
+		 */
+		public int y;
+
+		/**
+		 * Constructs a new Position with the x and y coordinate.
+		 * 
+		 * @param x
+		 * @param y
+		 */
+
+		public Position(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+
+		/**
+		 * Compares this Position with an other position to determine which is
+		 * the greater one. X is prioritized for the TreeMap.
+		 */
+
+		@Override
+		public int compareTo(Object o) {
+			if (!(o instanceof Position)) {
+				throw new IllegalArgumentException();
+			}
+
+			Position p = (Position) o;
+			int res = 0;
+			if (p.x < x) {
+				res -= 2;
+			} else if (p.x > x) {
+				res += 2;
+			}
+			if (p.y < y) {
+				res -= 1;
+			} else if (p.y > y) {
+				res += 1;
+			}
+			return res;
+		}
+
+		/**
+		 * Determines whether this Position is equal to the given Position.
+		 */
+
+		@Override
+		public boolean equals(Object o) {
+			if (!(o instanceof Position)) {
+				throw new IllegalArgumentException();
+			}
+
+			Position p = (Position) o;
+			return p.x == x && p.y == y;
+		}
+
+		/**
+		 * @return a textual representation of a coordinate. (x,y)
+		 */
+
+		public String toString() {
+			return "(" + x + "," + y + ")";
+		}
+	}
+
+	/**
+	 * Class Row that holds a set of blocks that represent a row on the board.
+	 * 
+	 * @author Jeroen
+	 */
+	public class Row {
+
+		/**
+		 * List of the blocks that this row contains.
+		 */
+		private List<Block> blocks;
+		/**
+		 * The orienation of this row.
+		 */
+		private RowOrientation ro;
+
+		/**
+		 * Constructs a Row and initializes the List
+		 */
+
+		public Row() {
+			this.blocks = new LinkedList<Block>();
+		}
+
+		/**
+		 * @return the list with blocks.
+		 */
+
+		public List<Block> getBlocks() {
+			return blocks;
+		}
+
+		/**
+		 * Extends the list with the given Block
+		 * 
+		 * @param b
+		 *            the block that is added to the List
+		 */
+
+		public void addBlock(Block b) {
+			blocks.add(b);
+		}
+
+		/**
+		 * @return the orientation of this row
+		 */
+
+		public RowOrientation getRowOrientation() {
+			return ro;
+		}
+
+		/**
+		 * Changes the orientation of this Row
+		 * 
+		 * @param r
+		 *            the new orientation of this Row
+		 */
+		public void setRowOrientation(RowOrientation r) {
+			ro = r;
+		}
+
+		/**
+		 * Converts this row to a combination of the String version of the
+		 * blocks
+		 */
+		public String toString() {
+			String res = "Row : ";
+			for (Block b : blocks) {
+				res += b.toString() + " ";
+			}
+			return res;
+		}
+	}
+}package Model;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import ss.week4.tictactoe.Block;
+import ss.week4.tictactoe.Board.Position;
+import ss.week4.tictactoe.Board.RowOrientation;
+
+public class Position {
+
+}

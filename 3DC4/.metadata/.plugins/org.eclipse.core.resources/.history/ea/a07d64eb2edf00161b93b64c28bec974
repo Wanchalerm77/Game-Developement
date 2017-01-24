@@ -1,0 +1,10 @@
+package Model;
+
+import java.util.ArrayList;
+import java.util.Observable;
+
+public class PlayerList extends Observable {
+	
+	List <Player> player = new ArrayList<>();
+
+}

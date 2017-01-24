@@ -1,0 +1,13 @@
+package viewTUI;
+
+import java.util.List;
+
+import Model.Player;
+
+public interface BoardInterface {
+
+	public void start();
+
+	public List<Player> showParties();
+
+}

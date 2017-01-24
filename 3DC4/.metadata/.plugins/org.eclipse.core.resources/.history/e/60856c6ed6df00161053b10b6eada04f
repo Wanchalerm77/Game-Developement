@@ -1,0 +1,30 @@
+package Model;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+
+public class PlayerList extends Observable {
+
+	private Map<name , disc> player = new HashMap<name, disc>();
+
+	public void addPlayer(Player player) {
+		this.player.add(player);
+		setChanged();
+		notifyObservers("player");
+	}
+
+	public List<Player> getPlayers() {
+		return player;
+	}
+
+	public Player getPlayer(int i) {
+		return player.get(i);
+
+	}
+	
+	public static void main(String[] args) {
+		
+	}
+
+}

@@ -1,0 +1,33 @@
+package Model;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+
+public class PlayerList extends Observable {
+
+	private List<Player> player = new ArrayList<>();
+
+	public void addPlayer(Player player) {
+		this.player.add(player);
+		setChanged();
+		notifyObservers("player");
+	}
+
+	public List<Player> getPlayers() {
+		return player;
+	}
+
+	public Player getPlayer(int i) {
+		return player.get(i);
+
+	}
+
+	public static void main(String[] args) {
+		Player player = new Player("Non", new Disc(Disc.Color.BLUE));
+		PlayerList p = new PlayerList();
+		p.addPlayer(player);
+
+	}
+
+}

@@ -1,0 +1,31 @@
+package ss.week4.tictactoe;
+
+import java.util.Random;
+
+import javax.swing.text.StyledEditorKit.ForegroundAction;
+
+public class NaiveStrategy implements Strategy {
+
+	Board board;
+	public Random random;
+	public final static String NAME = "Je moeder slikt pik";
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return NaiveStrategy.NAME;
+	}
+
+	@Override
+	public int determineMove(Board b, Mark m) {
+		int freeSpot;
+
+		while (!b.isEmptyField(freeSpot = random.nextInt(Board.DIM * Board.DIM))) {
+
+			return freeSpot;
+		}
+		return -1;
+
+	}
+
+}

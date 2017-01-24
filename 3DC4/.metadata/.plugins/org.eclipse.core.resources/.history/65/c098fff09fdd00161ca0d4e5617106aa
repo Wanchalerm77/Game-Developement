@@ -1,0 +1,12 @@
+package GameDevelopement;
+
+import java.awt.event.KeyAdapter;
+
+public class KeyInput  extends KeyAdapter {
+	
+	private void keyPress(KeyEvent o) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,27 @@
+package controller;
+
+import Model.Board;
+import Model.Disc;
+import Model.Player;
+import gameLogic.HumanPlayer;
+
+public class Controller {
+
+	private Board board;
+	private Player player;
+
+	public Controller(Board board) {
+		this.board = board;
+		this.player = new HumanPlayer("Non", Disc.Color.BLUE);
+
+	}
+
+	public void start() {
+		board.reset();
+	}
+
+	public void resetScore() {
+		board.resetScore();
+	}
+
+}

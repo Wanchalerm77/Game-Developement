@@ -1,0 +1,71 @@
+package viewTUI;
+
+import java.util.List;
+
+import Model.Board;
+import Model.Player;
+import controller.Game;
+
+public class BoardTUI implements BoardInterface {
+
+	@Override
+	public void start() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public List<Player> showParties() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updatePlayer(Player p) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateBoard(Board b) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateScore(Player p) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateBag(Bag b) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void showStatus() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Move getMove(HumanPlayer p) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setGame(Game g) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Move getMove(HumanPlayer p) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

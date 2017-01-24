@@ -1,0 +1,22 @@
+package Model;
+
+public class Disc {
+
+	public enum Color {
+
+		WHITE('w'), GREEN('g'), RED('r'), BLUE('b'), ORANGE('o'), PURPLE('p'), YELLOW('y'), EMPTY('E');
+
+		public final char c;
+
+		private Color(char c) {
+			this.c = c;
+		}
+	}
+
+	private Color color;
+
+	public this.Color color(Color color) {
+	 return	this.color = color;
+	}
+
+}

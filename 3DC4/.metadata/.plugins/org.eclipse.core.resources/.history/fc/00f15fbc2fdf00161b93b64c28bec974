@@ -1,0 +1,9 @@
+package viewTUI;
+
+public interface BoardInterface {
+	
+	public void start();
+	public List <Player> showParties();
+	
+
+}

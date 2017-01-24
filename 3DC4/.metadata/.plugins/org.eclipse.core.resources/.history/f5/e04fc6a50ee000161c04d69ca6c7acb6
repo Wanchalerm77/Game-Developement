@@ -1,0 +1,16 @@
+package controller;
+
+import Model.Board;
+import Model.Player;
+
+public class Controller {
+
+	private Board board;
+	private Player player;
+
+	public Controller(Board board) {
+		this.board = board;
+		this.player = new HumanPlayer("Non",)
+	}
+
+}

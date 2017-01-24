@@ -1,0 +1,11 @@
+package viewTUI;
+
+import Model.Player;
+
+public interface BoardInterface {
+
+	public void start();
+
+	public List<Player> showParties();
+
+}

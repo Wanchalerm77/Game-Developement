@@ -1,0 +1,7 @@
+package Model;
+
+public enum  {
+	
+	BLACK, GREEN , RED , BLUE , CYAN,  
+
+}

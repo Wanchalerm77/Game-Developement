@@ -1,0 +1,33 @@
+package ss.week7.threads;
+
+public class SynchronizedIntCell implements IntCell {
+
+	private boolean written = true;
+	private int value = 0;
+
+	public synchronized void setValue(int valueArg) {
+		while (written) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		this.value = valueArg;
+		notifyAll();
+		written = true;
+	}
+
+	public synchronized int getValue() {
+		while (!written) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		written = false;
+		notifyAll();
+		return value;
+	}
+}

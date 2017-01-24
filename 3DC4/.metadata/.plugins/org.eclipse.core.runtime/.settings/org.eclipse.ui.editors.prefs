@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+net.sf.eclipsecs.error.color=128,128,128
+net.sf.eclipsecs.error.text.style=NONE
+net.sf.eclipsecs.info.color=128,128,128
+net.sf.eclipsecs.info.text.style=NONE
+net.sf.eclipsecs.warning.color=0,0,0
+net.sf.eclipsecs.warning.text.style=NONE
+org.jmlspecs.openjml.eclipse.crpnKey=255,0,0
+org.jmlspecs.openjml.eclipse.trpKey=false
+org.jmlspecs.openjml.eclipse.trpnKey=false
+overviewRuler_migration=migrated_3.1
+quickdiff.nowarn.before.switch=always

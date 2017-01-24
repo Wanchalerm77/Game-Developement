@@ -1,0 +1,19 @@
+<html>
+ <head>
+  <title>Connect Four</title>
+  <style type="text/css">
+   .center
+   {
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 0px;
+   }
+  </style>
+ </head>
+ <body>
+  <p class="center">
+   <applet code="InterfaceEngine.class" codebase="bin" width=450 height=450>Your borwser does not support Java applets. Try using a different browser like Mozilla or Opera.</applet>
+  </p>
+ </body>
+</html>

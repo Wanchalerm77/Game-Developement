@@ -1,0 +1,42 @@
+package gameLogic;
+
+import java.util.Scanner;
+
+import Model.Board;
+import Model.Disc;
+import Model.Player;
+
+public class HumanPlayer extends Player {
+
+	public HumanPlayer(String name, Disc.Color disc) {
+		// TODO Auto-generated constructor stub
+		super(name, disc);
+
+	}
+
+	@Override
+	public int determineMove(Board board) {
+
+		int columnPosition = 0;
+		boolean intRead = false;
+		Scanner input = new Scanner(System.in);
+		do {
+			System.out.println("Where do you want to drop your disc? (0-6) :");
+			try (Scanner scannerLine = new Scanner(input.nextLine())) {
+				if (scannerLine.hasNextInt()) {
+					intRead = true;
+
+					if (columnPosition < 0 || columnPosition > 6) {
+						System.out.println("NOPE");
+						columnPosition = scannerLine.nextInt();
+
+					}
+
+				}
+
+			}
+		} while (!intRead);
+
+		return columnPosition;
+	}
+}

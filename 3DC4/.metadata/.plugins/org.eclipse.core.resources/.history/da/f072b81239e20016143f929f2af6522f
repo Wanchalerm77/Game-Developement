@@ -1,0 +1,100 @@
+package Model;
+
+public abstract class Player {
+
+	private String name;
+	private Disc.Color disc;
+	private int score;
+	public Board board;
+	public static int[] xy;
+
+	/*
+	 * Constructor creates a Player with a name and a disc
+	 */
+
+	public Player(String name, Disc.Color disc) {
+		this.name = name;
+		this.disc = disc;
+		this.score = 0;
+
+	}
+	
+	public Player() {
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * 
+	 * @return name
+	 */
+
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * 
+	 * @return disc object
+	 */
+	public Disc.Color getDisc() {
+		return disc;
+	}
+
+	/**
+	 * 
+	 * @return score
+	 */
+
+	public int getScore() {
+		return score;
+	}
+	
+	
+	public int[] getLastMove() {
+		return xy;
+	}
+
+	/**
+	 * Ask the player for input to put the disc in checks if col is nor full
+	 * 
+	 * 
+	 * @param board
+	 */
+
+	/*
+	 * public void makeMove(Disc.Color[][] board) {
+	 * 
+	 * System.out.println("Drop a disc (0-6) :"); try (Scanner input = new
+	 * Scanner(System.in)) { if (input.hasNext()) { int columnPosition =
+	 * input.nextInt(); dropDisc(board, columnPosition, getDisc());
+	 * 
+	 * } } }
+	 */
+
+	public void makeMove(Board board) {
+		 xy = determineMove(board);
+		int x = xy[0];
+		int y = xy[1];
+
+		board.dropDisc(board, x, y, getDisc());
+		board.showCopy();
+
+	}
+
+	public abstract int[] determineMove(Board board);
+
+	
+
+	}
+
+	/**
+	 * Checkks a row if it is full and places a disc if it cannot drop a disc it
+	 * returns false
+	 * 
+	 * 
+	 * @param board
+	 * @param columnPosition
+	 * @param disc
+	 */
+
+}
