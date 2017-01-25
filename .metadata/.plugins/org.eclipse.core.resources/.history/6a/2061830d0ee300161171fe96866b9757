@@ -223,7 +223,7 @@ public class Game {
 		if (diagonalCheckX(disc) || diagonalCheckY(disc)) {
 			if (checkWin00(disc) || checkWin03(disc) || checkWin30(disc) || checkWin33(disc)) {
 				return true;
-			}
+			} 
 			if (checkMiddleX(disc) || checkMiddleY(disc)) {
 				return true;
 			}

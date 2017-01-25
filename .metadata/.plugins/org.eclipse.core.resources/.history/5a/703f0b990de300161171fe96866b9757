@@ -224,16 +224,14 @@ public class Game {
 			if (checkWin00(disc) || checkWin03(disc) || checkWin30(disc) || checkWin33(disc)) {
 				return true;
 			}
-			if (checkMiddleX(disc) || checkMiddleY(disc)) {
-				return true;
-			}
 
 		}
 		return false;
 	}
 
-	public boolean checkMiddleX(Color disc) {
+	public boolean checMiddleX(Color disc) {
 
+		
 		Color[][] bottomLayer = board.allLayers.get(0);
 		Color[][] secondlayer = board.allLayers.get(1);
 		Color[][] thirdlayer = board.allLayers.get(2);
@@ -257,8 +255,10 @@ public class Game {
 
 		return false;
 	}
-
-	public boolean checkMiddleY(Color disc) {
+	
+	
+	
+	public boolean checMiddleY(Color disc) {
 		Color[][] bottomLayer = board.allLayers.get(0);
 		Color[][] secondlayer = board.allLayers.get(1);
 		Color[][] thirdlayer = board.allLayers.get(2);
@@ -267,16 +267,16 @@ public class Game {
 				&& toplayer[3][1].equals(disc)) {
 			return true;
 		}
-		if (bottomLayer[0][2].equals(disc) && secondlayer[1][2].equals(disc) && thirdlayer[2][2].equals(disc)
-				&& toplayer[3][2].equals(disc)) {
+		if (bottomLayer[2][0].equals(disc) && secondlayer[2][1].equals(disc) && thirdlayer[2][2].equals(disc)
+				&& toplayer[2][3].equals(disc)) {
 			return true;
 		}
-		if (bottomLayer[3][1].equals(disc) && secondlayer[2][1].equals(disc) && thirdlayer[1][1].equals(disc)
-				&& toplayer[0][1].equals(disc)) {
+		if (bottomLayer[1][3].equals(disc) && secondlayer[1][2].equals(disc) && thirdlayer[1][1].equals(disc)
+				&& toplayer[1][0].equals(disc)) {
 			return true;
 		}
-		if (bottomLayer[3][2].equals(disc) && secondlayer[2][2].equals(disc) && thirdlayer[1][21].equals(disc)
-				&& toplayer[0][2].equals(disc)) {
+		if (bottomLayer[2][3].equals(disc) && secondlayer[2][2].equals(disc) && thirdlayer[2][1].equals(disc)
+				&& toplayer[2][0].equals(disc)) {
 			return true;
 		}
 
