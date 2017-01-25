@@ -14,9 +14,6 @@ public class Board extends Observable {
 	public static final int Y = 4;
 	public static final int LAYER = 4;
 	private int winsOfP1, winsOfP2 = 0;
-	private Game g;
-	private PlayerList player = new PlayerList();
-	private int[] test;
 
 	public List<Color[][]> allLayers = new ArrayList<>();
 

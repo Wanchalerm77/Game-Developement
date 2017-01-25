@@ -17,28 +17,25 @@ public class Game {
 
 	private int current;
 
-	private int[] lastMove;
-
 	/**
+	 * Contrsucts a game with two players
 	 * 
 	 * @param p1
 	 * @param p2
 	 */
 
 	public Game(Player p1, Player p2) {
-		// TODO Auto-generated constructor stub
 		board = new Board();
 		playerlist = new PlayerList();
 		current = 0;
 		playerlist.player.add(p1);
 		playerlist.player.add(p2);
-		lastMove = new int[2];
 
 	}
 
 	/**
-	 * starts the game resets the game and allows us to play it while play ==
-	 * true
+	 * starts the game, resets the game and allows us to play it if we want to
+	 * 
 	 */
 
 	public void start() {
@@ -64,6 +61,7 @@ public class Game {
 		String answer;
 		do {
 			System.out.print(prompt);
+			@SuppressWarnings("resource")
 			Scanner in = new Scanner(System.in);
 			answer = in.hasNextLine() ? in.nextLine() : null;
 		} while (answer == null || (!answer.equals(yes) && !answer.equals(no)));
@@ -73,6 +71,7 @@ public class Game {
 	}
 
 	/**
+	 * resets the game
 	 * 
 	 */
 
@@ -82,8 +81,10 @@ public class Game {
 	}
 
 	/**
+	 * iterates through the list of players and checks for every player if
+	 * he/she has a column, row or a diagonal line
 	 * 
-	 * @return
+	 * @return true if a player has a winning row, column or diagonal line
 	 */
 
 	public boolean hasWinner() {
@@ -102,8 +103,9 @@ public class Game {
 	}
 
 	/**
+	 * Checks wether the game needs to be closed or not *
 	 * 
-	 * @return
+	 * @return Returns true if the board is full or we have a winner
 	 */
 
 	public boolean gameOver() {
@@ -134,11 +136,10 @@ public class Game {
 	}
 
 	/**
-	 * Checks if a row is filled
-	 * 
+	 * Checks if a column is filled
 	 * 
 	 * @param disc
-	 * @return counter == 4 ? true : false;
+	 * @return Returns true if there are 4 disc at the same color in a column
 	 */
 
 	public boolean hasColumn(Color disc) {
@@ -166,9 +167,10 @@ public class Game {
 	}
 
 	/**
+	 * Checks if there is a filled row of that certain disc
 	 * 
 	 * @param disc
-	 * @return
+	 * @return True if there is row filled with that disc
 	 */
 
 	public boolean hasRow(Color disc) {
@@ -217,14 +219,164 @@ public class Game {
 	 */
 
 	public boolean hasDiagonal(Color disc) {
+
+		if (diagonalCheckX(disc) || diagonalCheckY(disc)) {
+
+		}
+	}
+
+	public boolean checkWin00(Color disc) {
+		Color[][] secondlayer = board.allLayers.get(1);
+		Color[][] thirdlayer = board.allLayers.get(2);
+		Color[][] toplayer = board.allLayers.get(3);
+		if (cornerCheck00(disc)) {
+			if (secondlayer[0][1].equals(disc) && thirdlayer[0][2].equals(disc) && toplayer[0][3].equals(disc)) {
+				return true;
+			}
+			if (secondlayer[1][0].equals(disc) && thirdlayer[2][0].equals(disc) && toplayer[3][0].equals(disc)) {
+				return true;
+
+			}
+			if (secondlayer[1][1].equals(disc) && thirdlayer[2][2].equals(disc) && toplayer[3][3].equals(disc)) {
+				return true;
+
+			}
+		}
+		return false;
+
+	}
+
+	public boolean checkWin30(Color disc) {
+		Color[][] secondlayer = board.allLayers.get(1);
+		Color[][] thirdlayer = board.allLayers.get(2);
+		Color[][] toplayer = board.allLayers.get(3);
+		if (cornerCheck00(disc)) {
+			if (secondlayer[0][1].equals(disc) && thirdlayer[0][2].equals(disc) && toplayer[0][3].equals(disc)) {
+				return true;
+			}
+			if (secondlayer[1][0].equals(disc) && thirdlayer[2][0].equals(disc) && toplayer[3][0].equals(disc)) {
+				return true;
+
+			}
+			if (secondlayer[1][1].equals(disc) && thirdlayer[2][2].equals(disc) && toplayer[3][3].equals(disc)) {
+				return true;
+
+			}
+		}
+		return false;
+
+	}
+
+	public boolean checkWin03(Color disc) {
+		Color[][] secondlayer = board.allLayers.get(1);
+		Color[][] thirdlayer = board.allLayers.get(2);
+		Color[][] toplayer = board.allLayers.get(3);
+		if (cornerCheck00(disc)) {
+			if (secondlayer[0][1].equals(disc) && thirdlayer[0][2].equals(disc) && toplayer[0][3].equals(disc)) {
+				return true;
+			}
+			if (secondlayer[1][0].equals(disc) && thirdlayer[2][0].equals(disc) && toplayer[3][0].equals(disc)) {
+				return true;
+
+			}
+			if (secondlayer[1][1].equals(disc) && thirdlayer[2][2].equals(disc) && toplayer[3][3].equals(disc)) {
+				return true;
+
+			}
+		}
+		return false;
+
+	}
+
+	public boolean checkWin33(Color disc) {
+		Color[][] secondlayer = board.allLayers.get(1);
+		Color[][] thirdlayer = board.allLayers.get(2);
+		Color[][] toplayer = board.allLayers.get(3);
+		if (cornerCheck00(disc)) {
+			if (secondlayer[0][1].equals(disc) && thirdlayer[0][2].equals(disc) && toplayer[0][3].equals(disc)) {
+				return true;
+			}
+			if (secondlayer[1][0].equals(disc) && thirdlayer[2][0].equals(disc) && toplayer[3][0].equals(disc)) {
+				return true;
+
+			}
+			if (secondlayer[1][1].equals(disc) && thirdlayer[2][2].equals(disc) && toplayer[3][3].equals(disc)) {
+				return true;
+
+			}
+		}
+		return false;
+
+	}
+
+	public boolean cornerCheck00(Color disc) {
+		Color[][] test = board.allLayers.get(0);
+		if (test[0][0].equals(disc)) {
+			return true;
+		}
+		return false;
+
+	}
+
+	public boolean cornerCheck30(Color disc) {
+		Color[][] tempLayer = board.allLayers.get(0);
+		if (tempLayer[3][0].equals(disc)) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean cornerCheck03(Color disc) {
+		Color[][] tempL = board.allLayers.get(0);
+		if (tempL[0][3].equals(disc)) {
+			return true;
+		}
+		return false;
+
+	}
+
+	public boolean cornerCheck33(Color disc) {
+		Color[][] tempLay = board.allLayers.get(0);
+		if (tempLay[3][3].equals(disc)) {
+			return true;
+		}
+		return false;
+
+	}
+
+	public boolean diagonalCheckX(Color disc) {
+		for (int x = 0; x < Board.X; x = x + 3) {
+			for (Color[][] s : board.allLayers) {
+				for (int y = 0; y < Board.Y; y++) {
+					if (s[x][y].equals(disc)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+
+	}
+
+	public boolean diagonalCheckY(Color disc) {
+		for (int y = 0; y < Board.Y; y = y + 3) {
+			for (Color[][] s : board.allLayers) {
+				for (int x = 0; x < Board.X; x++) {
+					if (s[x][y].equals(disc)) {
+						return true;
+					}
+				}
+			}
+		}
 		return false;
 
 	}
 
 	/**
+	 * Checks wether one of the players has a row, column or a diagonal
 	 * 
 	 * @param d
-	 * @return
+	 * @return True if any of these statements are true
 	 */
 	public boolean isWinner(Color d) {
 
