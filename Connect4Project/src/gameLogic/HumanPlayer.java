@@ -24,31 +24,27 @@ public class HumanPlayer extends Player {
 		int columnPosition = -1;
 		int rowPosition = -1;
 		int[] list = new int[2];
-		boolean test = true;
 
-		while (test && columnPosition < 0 || columnPosition > 4 || rowPosition < 0 || rowPosition > 4) {
+		do {
 			instructions();
-
+			@SuppressWarnings("resource")
 			Scanner input = new Scanner(System.in);
-
+			@SuppressWarnings("resource")
 			Scanner scannerLine = new Scanner(input.nextLine());
 			if (scannerLine.hasNextInt()) {
 				columnPosition = scannerLine.nextInt();
-				rowPosition = scannerLine.nextInt();
+				if (scannerLine.hasNextInt()) {
+					rowPosition = scannerLine.nextInt();
+				}
 				list[0] = rowPosition;
 				list[1] = columnPosition;
 				if (columnPosition < 0 || columnPosition > 4 || rowPosition < 0 || rowPosition > 4) {
 					System.out.println("Your move is not allowed");
 					System.out.println("");
 				}
-
-				if (columnPosition > 0 || columnPosition < 4 && rowPosition > 0 || rowPosition < 4) {
-					test = false;
-
-				}
-
 			}
-		}
+
+		} while (columnPosition < 0 || columnPosition > 4 || rowPosition < 0 || rowPosition > 4);
 
 		return list;
 

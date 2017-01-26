@@ -44,7 +44,7 @@ public class Game {
 
 			reset();
 			play();
-			keepPlaying = readBoolean("\n> Play another time? (y/n)?", "y", "n");
+			keepPlaying = readBoolean("\n> Play another time? (yes/no)?", "y", "n");
 		}
 
 	}
@@ -77,6 +77,7 @@ public class Game {
 
 	private void reset() {
 		current = 0;
+		board.reset();
 		board.showCopy();
 	}
 
