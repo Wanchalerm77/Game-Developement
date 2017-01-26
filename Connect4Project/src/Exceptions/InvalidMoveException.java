@@ -1,13 +1,14 @@
 package Exceptions;
 
-public class InvalidMoveException {
+public class InvalidMoveException extends Exception {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public InvalidMoveException() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public String getMessage() {
-		return "Move is not allowed";
+		super("Move is not allowed");
 	}
 
 }
