@@ -76,7 +76,8 @@ public class Board extends Observable {
 	}
 
 	public String getScore() {
-		return " The score is \n" + " Player One " + winsOfP1 + "Player Two" + winsOfP2;
+		return " The score is \n"
+				+ " Player One " + winsOfP1 + "Player Two" + winsOfP2; 
 	}
 
 	/**
@@ -157,6 +158,8 @@ public class Board extends Observable {
 	 * 
 	 * @return
 	 */
+
+	
 
 	public static void main(String[] args) {
 		Player p1 = new HumanPlayer("Non", Color.BLUE);

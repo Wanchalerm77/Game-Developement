@@ -75,7 +75,7 @@ public class Board extends Observable {
 
 	}
 
-	public String getScore() {
+	public static String getScore() {
 		return " The score is \n" + " Player One " + winsOfP1 + "Player Two" + winsOfP2;
 	}
 
@@ -163,6 +163,7 @@ public class Board extends Observable {
 		Player p2 = new HumanPlayer("lol", Color.GREEN);
 
 		Game g = new Game(p1, p2);
+		System.out.println(getScore());
 		g.start();
 
 	}

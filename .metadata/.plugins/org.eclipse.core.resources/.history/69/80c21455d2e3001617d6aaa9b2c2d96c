@@ -234,21 +234,7 @@ public class Game {
 
 	public boolean checkDiagInLayer(Color disc) {
 
-		int counter = 0;
-		for (Color[][] s : board.allLayers) {
-			counter = 0;
-			for (int xy = 0; xy < Board.X; xy++) {
-				if (s[xy][xy].equals(disc)) {
-					counter++;
-
-				}
-				if (counter == 4) {
-					return true;
-				}
-			}
-
-		}
-		counter = 0;
+	int counter = 0;
 		for (Color[][] s : board.allLayers) {
 			counter = 0;
 			for (int x = 0, y = 3; x < Board.X; x++, y--) {

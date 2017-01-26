@@ -248,10 +248,9 @@ public class Game {
 			}
 
 		}
-		counter = 0;
 		for (Color[][] s : board.allLayers) {
 			counter = 0;
-			for (int x = 0, y = 3; x < Board.X; x++, y--) {
+			for (int x = 0, y = 3; x < Board.X && y < 0; x++, y--) {
 				if (s[x][y].equals(disc)) {
 					counter++;
 

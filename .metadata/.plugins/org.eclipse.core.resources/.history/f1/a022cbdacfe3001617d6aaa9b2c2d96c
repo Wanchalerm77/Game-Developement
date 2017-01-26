@@ -75,10 +75,6 @@ public class Board extends Observable {
 
 	}
 
-	public String getScore() {
-		return " The score is \n" + " Player One " + winsOfP1 + "Player Two" + winsOfP2;
-	}
-
 	/**
 	 * Checks if on that specific postion with the coordinates (x.y) there are
 	 * empty slots left
@@ -157,6 +153,10 @@ public class Board extends Observable {
 	 * 
 	 * @return
 	 */
+
+	public String getScore() {
+		return null;
+	}
 
 	public static void main(String[] args) {
 		Player p1 = new HumanPlayer("Non", Color.BLUE);
