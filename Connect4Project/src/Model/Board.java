@@ -53,24 +53,47 @@ public class Board extends Observable {
 	}
 
 	public void showCopy() {
-		int index = 0;
 		String[] layer = { "1 - Bottom view", "2", "3", "4 - Top view" };
+		Color[][] bottomLayer = allLayers.get(0);
+		Color[][] secondlayer = allLayers.get(1);
+		Color[][] thirdlayer = allLayers.get(2);
+		Color[][] toplayer = allLayers.get(3);
 
-		for (Color[][] lol : allLayers) {
-			System.out.println("Layer: " + layer[index]);
+		System.out.println("Layer: " + layer[0] + "                " + "Layer: " + layer[1]);
 
-			for (int k = 0; k < lol.length; k++) {
-				for (int i = 0; i < lol.length; i++) {
-					System.out.print(" |   " + lol[k][i]);
+		for (int k = 0; k < bottomLayer.length; k++) {
+			for (int i = 0; i < bottomLayer.length; i++) {
+				System.out.print(" | " + bottomLayer[k][i]);
 
-				}
-				System.out.println("");
-				System.out.println("-----------------------------------------");
 			}
-			System.out.println("");
-			System.out.println("");
-			index++;
+			System.out.print("     ");
 
+			for (int i = 0; i < bottomLayer.length; i++) {
+				System.out.print(" | " + secondlayer[k][i]);
+
+			}
+
+			System.out.println("");
+			System.out.println("--------------------------------      ----------------------------");
+		}
+		System.out.println("");
+
+		System.out.println("Layer: " + layer[2] + "                              " + "Layer: " + layer[3]);
+
+		for (int k = 0; k < 4; k++) {
+			for (int i = 0; i < thirdlayer.length; i++) {
+				System.out.print(" | " + thirdlayer[k][i]);
+
+			}
+			System.out.print("     ");
+
+			for (int i = 0; i < toplayer.length; i++) {
+				System.out.print(" | " + toplayer[k][i]);
+
+			}
+
+			System.out.println("");
+			System.out.println("--------------------------------      ----------------------------");
 		}
 
 	}
