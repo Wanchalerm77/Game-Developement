@@ -14,20 +14,9 @@ public class HumanPlayer extends Player {
 
 	}
 
-	/**
-	 * Prints out the instructions to play the game
-	 */
-
 	public void instructions() {
 		System.out.println("Where do you want to drop your disc? X - Y  :");
 	}
-
-	/**
-	 * Ask the Client for input for the x and y coordinates and them as a list
-	 * Code keeps invoking the instructions method if the input does not meet
-	 * the required format
-	 * 
-	 */
 
 	@Override
 	public int[] determineMove(Board board) {
