@@ -45,8 +45,7 @@ public class HumanPlayer extends Player {
 				}
 			}
 
-		} while (columnPosition < 0 || columnPosition > 4 || rowPosition < 0 || rowPosition > 4
-				|| board.canDrop(columnPosition, rowPosition) == false);
+		} while (columnPosition < 0 || columnPosition > 4 || rowPosition < 0 || rowPosition > 4);
 
 		return list;
 

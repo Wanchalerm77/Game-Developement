@@ -38,15 +38,13 @@ public class HumanPlayer extends Player {
 				}
 				list[0] = rowPosition;
 				list[1] = columnPosition;
-				if (columnPosition < 0 || columnPosition > 4 || rowPosition < 0 || rowPosition > 4
-						|| board.canDrop(columnPosition, rowPosition) == false) {
+				if (columnPosition < 0 || columnPosition > 4 || rowPosition < 0 || rowPosition > 4 ||  board.canDrop(columnPosition, rowPosition) == false) {
 					System.out.println("Your move is not allowed");
 					System.out.println("");
 				}
 			}
 
-		} while (columnPosition < 0 || columnPosition > 4 || rowPosition < 0 || rowPosition > 4
-				|| board.canDrop(columnPosition, rowPosition) == false);
+		} while (columnPosition < 0 || columnPosition > 4 || rowPosition < 0 || rowPosition > 4);
 
 		return list;
 
