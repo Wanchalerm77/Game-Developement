@@ -28,4 +28,8 @@ public class Disc {
 		return " => :" + color;
 	}
 
+	public static void main(String[] args) {
+
+	}
+
 }

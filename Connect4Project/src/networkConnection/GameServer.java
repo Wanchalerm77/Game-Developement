@@ -1,0 +1,37 @@
+package networkConnection;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import Model.Board;
+import Model.Disc.Color;
+import Model.Player;
+
+public class GameServer {
+
+	private Board board;
+	private Map<Player, Color> players;
+
+	public GameServer(List<Player> playerlist) {
+		this.players = new LinkedHashMap<>();
+		for (int i = 0; i < playerlist.size(); i++) {
+			Player p = playerlist.get(i);
+			players.put(p, Color.values()[i]);
+		}
+		this.board = new Board();
+
+	}
+
+	public void makeMove() {
+
+	}
+
+	private void notifyPlayers(String message) {
+		for (Player p : players.keySet()) {
+
+		}
+
+	}
+
+}
