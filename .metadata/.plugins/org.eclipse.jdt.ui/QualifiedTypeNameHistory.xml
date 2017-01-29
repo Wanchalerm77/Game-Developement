@@ -20,6 +20,7 @@
 <fullyQualifiedTypeName name="java.io.IOException"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.util.LinkedHashMap"/>
-<fullyQualifiedTypeName name="Model.Disc.Color"/>
 <fullyQualifiedTypeName name="Model.Board"/>
+<fullyQualifiedTypeName name="java.lang.Package"/>
+<fullyQualifiedTypeName name="Model.Disc.Color"/>
 </qualifiedTypeNameHistroy>

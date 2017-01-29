@@ -1,0 +1,51 @@
+package gameLogic;
+
+import java.util.Random;
+import java.util.Scanner;
+
+import Model.Board;
+
+public class DumbStrategy implements Strategy {
+
+	private Random random = new Random();
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "TWAT";
+	}
+
+	@Override
+	public int[] determineMove(Board board) {
+
+		int columnPosition = -1;
+		int rowPosition = -1;
+		int[] list = new int[2];
+
+		do {
+			@SuppressWarnings("resource")
+			Scanner input = new Scanner(System.in);
+			@SuppressWarnings("resource")
+			Scanner scannerLine = new Scanner(input.nextLine());
+			if (scannerLine.hasNextInt()) {
+				columnPosition = scannerLine.nextInt();
+				if (scannerLine.hasNextInt()) {
+					rowPosition = scannerLine.nextInt();
+				}
+				list[0] = rowPosition;
+				list[1] = columnPosition;
+				if (columnPosition < 0 || columnPosition > 4 || rowPosition < 0 || rowPosition > 4
+						|| board.canDrop(columnPosition, rowPosition) == false) {
+					System.out.println("Your move is not allowed");
+					System.out.println("");
+				}
+			}
+
+		} while (columnPosition < 0 || columnPosition > 4 || rowPosition < 0 || rowPosition > 4
+				|| board.canDrop(columnPosition, rowPosition) == false);
+
+		return list;
+
+	}
+
+}

@@ -38,13 +38,9 @@ public class Server {
 		} catch (IOException e) {
 			System.out.println("ERROR: Could not create a serversocket on port " + port);
 		}
-		
 
-	}
-	try {
-		Thread streanInputHandler = new Thread(server);
-		
-		
+		System.out.println("LOL");
+
 	}
 
 }
