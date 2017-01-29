@@ -9,14 +9,21 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import Model.Disc.Color;
+import Model.Player;
 import controller.Game;
+import gameLogic.ComputerPlayer;
+import gameLogic.DumbStrategy;
+import gameLogic.HumanPlayer;
+import gameLogic.SmartStrategy;
 
-public class Client implements Runnable {
+public class Client extends Thread {
 
 	private Socket socket;
 	private BufferedWriter writer;
 	private BufferedReader reader;
 	private Game game;
+	private Player player;
 	private static final String USAGE = "Arguments: <name> <adress> <port>";
 	private String name;
 	private static final String EXIT = "exit";
@@ -34,9 +41,11 @@ public class Client implements Runnable {
 	 * @param socket
 	 */
 
-	public Client(String name, Socket socket) throws IOException {
+	public Client(String name, Socket socket, Player player) throws IOException {
 		this.socket = socket;
 		this.name = name;
+		this.player = player;
+
 		writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 		reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
@@ -66,10 +75,6 @@ public class Client implements Runnable {
 		}
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public InetAddress getIP(String host) {
 		InetAddress adress = null;
 		try {
@@ -89,18 +94,18 @@ public class Client implements Runnable {
 			System.out.println("sry mate");
 		}
 		return port;
+
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		if (args.length != 3) {
 			System.out.println(USAGE);
 			System.exit(0);
 		}
 
-		String name = args[0];
 		InetAddress addres = null;
 		int port = 0;
-		Socket socket = null;
+		Socket socket = new Socket();
 
 		//
 
@@ -126,6 +131,26 @@ public class Client implements Runnable {
 		} catch (IOException e) {
 			System.out.println("ERROR: could not create a socket on" + addres + " and port " + port);
 		}
+
+		Player player;
+		Client client;
+		switch (args[0]) {
+		case "-S":
+			player = new ComputerPlayer(Color.GREEN, new SmartStrategy());
+			client = new Client("Smart player", socket, player);
+			break;
+		case "-N":
+			player = new ComputerPlayer(Color.PURPLE, new DumbStrategy());
+			client = new Client("Dumb player", socket, player);
+			break;
+		default:
+			player = new HumanPlayer(args[0], Color.RED);
+			client = new Client(args[0], socket, player);
+			break;
+
+		}
+		client.start();
+
 	}
 }
 

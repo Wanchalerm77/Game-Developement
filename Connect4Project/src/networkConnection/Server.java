@@ -8,6 +8,24 @@ import java.util.List;
 
 public class Server {
 
+	// Commands from the Client //
+
+	public static final String SENDCAPABILITIES = "sendCapabilities";
+
+	public static final String JOINROOM = "joinRoom";
+
+	public static final String GETROOMLIST = "getRoomList";
+
+	public static final String LEAVEROOM = "leaveRoom";
+
+	public static final String MAKEMOVE = "makeMove";
+
+	public static final String SENDMESSAGE = "sendMessage";
+
+	public static final String REQUESTLEADERBOARD = "requestLeaderboard";
+
+	// ----------------------------------------------------------------------//
+
 	private static final String USAGE = "<port>";
 	private static List<Client> clients;
 	public int port;
