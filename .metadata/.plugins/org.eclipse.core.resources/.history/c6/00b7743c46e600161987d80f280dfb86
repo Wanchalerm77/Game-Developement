@@ -9,36 +9,11 @@ import java.util.List;
 public class Server {
 
 	private static final String USAGE = "<port>";
-	private static List<Client> clients;
+	public static List<Client> clients;
 	public int port;
-	private Thread listenThread;
-	private boolean listen = false;
-
-	public Server(int port) {
+	
+	public Server(int port ) {
 		this.port = port;
-	}
-
-	public void start() {
-		listen = true;
-
-		listenThread = new Thread(() -> listen());
-
-		listenThread.start();
-	}
-
-	public void listen() {
-		while (listen) {
-
-		}
-
-	}
-
-	private void process() {
-
-	}
-
-	public void send(byte[] data) {
-
 	}
 
 	public static void main(String[] args) {
