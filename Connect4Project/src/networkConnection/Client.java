@@ -8,26 +8,23 @@ import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 import Model.Disc.Color;
 import Model.Player;
-import controller.Game;
 import gameLogic.ComputerPlayer;
 import gameLogic.DumbStrategy;
 import gameLogic.HumanPlayer;
 import gameLogic.SmartStrategy;
 
-public class Client extends Thread {
+public class Client {
 
 	private Socket socket;
 	private BufferedWriter writer;
 	private BufferedReader reader;
-	private Game game;
 	private Player player;
 	private static final String USAGE = "Arguments: <name> <adress> <port>";
-	private String name;
 	private static final String EXIT = "exit";
-	private Error error = Error.NONE;
 
 	public enum Error {
 		NONE, SOCKET_ERROR, PLAYER_DISCONNECTED, CONNECTION_PROBLEM, IO_EXCEPTION, UNKNOWN_HOST
@@ -41,59 +38,12 @@ public class Client extends Thread {
 	 * @param socket
 	 */
 
-	public Client(String name, Socket socket, Player player) throws IOException {
+	public Client(Socket socket, Player player) throws IOException {
 		this.socket = socket;
-		this.name = name;
 		this.player = player;
 
 		writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 		reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-	}
-
-	@Override
-	public void run() {
-		String line = null;
-		try {
-			while ((line = reader.readLine()) != null) {
-				System.out.println(line);
-			}
-		} catch (IOException e) {
-			System.out.println(Error.IO_EXCEPTION);
-			;
-
-		}
-
-	}
-
-	public void shutDown() {
-		try {
-			socket.close();
-		} catch (IOException e) {
-			System.out.println(Error.IO_EXCEPTION);
-
-		}
-	}
-
-	public InetAddress getIP(String host) {
-		InetAddress adress = null;
-		try {
-			adress = InetAddress.getByName(host);
-
-		} catch (UnknownHostException e) {
-			System.out.println(Error.UNKNOWN_HOST);
-		}
-		return adress;
-	}
-
-	public int getPort(String portString) {
-		int port = 0;
-		try {
-			port = Integer.parseInt(portString);
-		} catch (NumberFormatException e) {
-			System.out.println("sry mate");
-		}
-		return port;
 
 	}
 
@@ -137,19 +87,32 @@ public class Client extends Thread {
 		switch (args[0]) {
 		case "-S":
 			player = new ComputerPlayer(Color.GREEN, new SmartStrategy());
-			client = new Client("Smart player", socket, player);
+			client = new Client(socket, player);
 			break;
 		case "-N":
 			player = new ComputerPlayer(Color.PURPLE, new DumbStrategy());
-			client = new Client("Dumb player", socket, player);
+			client = new Client(socket, player);
 			break;
 		default:
 			player = new HumanPlayer(args[0], Color.RED);
-			client = new Client(args[0], socket, player);
+			client = new Client(socket, player);
 			break;
 
 		}
-		client.start();
+
+		try {
+			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			Scanner input = new Scanner(reader);
+
+			while (input.hasNextLine()) {
+				String line = input.nextLine();
+				System.out.println(line);
+			}
+
+		} catch (IOException e) {
+
+		}
 
 	}
 }

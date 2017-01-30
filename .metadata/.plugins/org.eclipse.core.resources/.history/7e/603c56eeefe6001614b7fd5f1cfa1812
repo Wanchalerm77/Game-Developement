@@ -1,0 +1,54 @@
+package networkConnection;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+import networkConnection.Client.Error;
+
+public class ClientHandeler implements Runnable {
+
+	private Socket socket;
+
+	public ClientHandeler(Socket socket) {
+		this.socket = socket;
+	}
+
+	public void shutDown() {
+		try {
+			socket.close();
+		} catch (IOException e) {
+			System.out.println(Error.IO_EXCEPTION);
+
+		}
+	}
+
+	public InetAddress getIP(String host) {
+		InetAddress adress = null;
+		try {
+			adress = InetAddress.getByName(host);
+
+		} catch (UnknownHostException e) {
+			System.out.println(Error.UNKNOWN_HOST);
+		}
+		return adress;
+	}
+
+	public int getPort(String portString) {
+		int port = 0;
+		try {
+			port = Integer.parseInt(portString);
+		} catch (NumberFormatException e) {
+			System.out.println("sry mate");
+		}
+		return port;
+
+	}
+
+	@Override
+	public void run() {
+
+	}
+
+}

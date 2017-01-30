@@ -27,36 +27,14 @@ public class Server {
 	// ----------------------------------------------------------------------//
 
 	private static final String USAGE = "<port>";
-	private static List<Client> clients;
+	public static List<Client> clients;
+
+	public static List<Client> waitingClients;
+
 	public int port;
-	private Thread listenThread;
-	private boolean listen = false;
 
 	public Server(int port) {
 		this.port = port;
-	}
-
-	public void start() {
-		listen = true;
-
-		listenThread = new Thread(() -> listen());
-
-		listenThread.start();
-	}
-
-	public void listen() {
-		while (listen) {
-
-		}
-
-	}
-
-	private void process() {
-
-	}
-
-	public void send(byte[] data) {
-
 	}
 
 	public static void main(String[] args) {
@@ -68,6 +46,8 @@ public class Server {
 
 		int port = 0;
 		clients = new ArrayList<>();
+		waitingClients = new ArrayList<>();
+
 		ServerSocket ss = null;
 		Socket clientsocket = null;
 
@@ -82,7 +62,12 @@ public class Server {
 		try {
 			ss = new ServerSocket(port);
 			System.out.println("Server starting");
-			clientsocket = ss.accept();
+			while (true) {
+				clientsocket = ss.accept();
+				Runnable r = new ClientHandeler(clientsocket);
+				Thread t = new Thread(r);
+				t.start();
+			}
 		} catch (IOException e) {
 			System.out.println("ERROR: Could not create a serversocket on port " + port);
 		}

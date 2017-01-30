@@ -4,10 +4,12 @@ import Model.Board;
 
 public class SmartStrategy implements Strategy {
 
+	private static final String NAME = "SMart player";
+
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return null;
+		return NAME;
 	}
 
 	@Override

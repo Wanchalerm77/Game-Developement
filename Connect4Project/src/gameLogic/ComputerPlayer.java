@@ -8,8 +8,10 @@ public class ComputerPlayer extends Player {
 
 	private Strategy strategy;
 	private Color color;
+	private String name;
 
 	public ComputerPlayer(Color color, Strategy strategy) {
+		this.name = name;
 		this.color = color;
 		this.strategy = strategy;
 

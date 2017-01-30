@@ -1,0 +1,40 @@
+package gameLogic;
+
+import Model.Board;
+import Model.Disc.Color;
+import Model.Player;
+
+public class ComputerPlayer extends Player {
+
+	private Strategy strategy;
+	private Color color;
+	private String name;
+
+	public ComputerPlayer(String name, Color color, Strategy strategy) {
+		this.name = name;
+		this.color = color;
+		this.strategy = strategy;
+
+	}
+	Strategy s = new DumbStrategy();
+	s.getName();
+
+	public ComputerPlayer(Color color) {
+		this.color = color;
+	}
+
+	public void setStrategy(Strategy strategy) {
+		this.strategy = strategy;
+	}
+
+	public Strategy getStrategy() {
+		return strategy;
+	}
+
+	@Override
+	public int[] determineMove(Board board) {
+		// TODO Auto-generated method stub
+		return strategy.determineMove(board);
+	}
+
+}

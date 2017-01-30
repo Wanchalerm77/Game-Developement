@@ -7,11 +7,12 @@ import Model.Board;
 public class DumbStrategy implements Strategy {
 
 	private Random random = new Random();
+	private static final String NAME = "Dumb Player";
 
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "TWAT";
+		return NAME;
 	}
 
 	@Override

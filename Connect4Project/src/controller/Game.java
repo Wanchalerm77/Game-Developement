@@ -465,7 +465,7 @@ public class Game {
 	}
 
 	/**
-	 * Checks wether one of the players has a row, column or a diagonal
+	 * Checks whether one of the players has a row, column or a diagonal
 	 * 
 	 * @param d
 	 * @return True if any of these statements are true
