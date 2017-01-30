@@ -28,7 +28,6 @@ public class Server {
 
 	private static final String USAGE = "<port>";
 	public static List<Client> clients;
-
 	public static List<Client> waitingClients;
 
 	public int port;
@@ -64,6 +63,7 @@ public class Server {
 			System.out.println("Server starting");
 			while (true) {
 				clientsocket = ss.accept();
+
 				Runnable r = new ClientHandeler(clientsocket);
 				Thread t = new Thread(r);
 				t.start();

@@ -1,37 +1,71 @@
 package networkConnection;
 
-import java.util.LinkedHashMap;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import Model.Board;
-import Model.Disc.Color;
-import Model.Player;
+import controller.Game;
 
-public class GameServer {
+public class GameServer extends Thread {
 
 	private Board board;
-	private Map<Player, Color> players;
+	private int current = 0;
+	private Game game;
+	private List<ClientHandeler> listOfClients;
 
-	public GameServer(List<Player> playerlist) {
-		this.players = new LinkedHashMap<>();
-		for (int i = 0; i < playerlist.size(); i++) {
-			Player p = playerlist.get(i);
-			players.put(p, Color.values()[i]);
+	public GameServer(ClientHandeler client1, ClientHandeler client2) {
+		listOfClients = new ArrayList<>();
+		listOfClients.add(client1);
+		listOfClients.add(client2);
+
+	}
+
+	/**
+	 * 
+	 * @param message
+	 * @throws IOException
+	 */
+
+	private void notifyPlayers(String message) throws IOException {
+		if (game.hasWinner()) {
+			for (ClientHandeler c : listOfClients) {
+				c.send(message);
+			}
+
 		}
-		this.board = new Board();
 
 	}
 
-	public void makeMove() {
+	public void start() {
+		boolean keepPlaying = true;
+		while (keepPlaying) {
 
-	}
-
-	private void notifyPlayers(String message) {
-		for (Player p : players.keySet()) {
-
+			board.reset();
+			game.play();
+			try {
+				notifyPlayers("We have a winner");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			keepPlaying = game.readBoolean("\n> Play another time? (yes/no)?", "y", "n");
 		}
 
 	}
+
+	/**
+	 * 
+	 */
+
+	public void run() {
+		board = new Board();
+		game = new Game(listOfClients.get(0), listOfClients.get(1));
+		start();
+
+	}
+
+	/**
+	 * 
+	 */
 
 }

@@ -5,19 +5,22 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.Scanner;
 
+import Model.Board;
+import Model.Disc.Color;
+import Model.Player;
 import networkConnection.Client.Error;
 
-public class ClientHandeler implements Runnable {
+public class ClientHandeler extends Player implements Runnable {
 
 	private Socket socket;
 	private BufferedReader in;
 	private BufferedWriter out;
 	private String name;
+	private Server server;
+	private Client client;
+	private Color color;
 
 	// Client to Server Commands //
 	public static final String SENDCAPABILITIES = "sendCapabilities";
@@ -69,6 +72,7 @@ public class ClientHandeler implements Runnable {
 
 		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+
 	}
 
 	/**
@@ -84,85 +88,30 @@ public class ClientHandeler implements Runnable {
 		}
 	}
 
+	public void processMove(String line) {
+		String[] words = line.split(" ");
+		int x = Integer.parseInt(words[1]);
+		int y = Integer.parseInt(words[2]);
+
+	}
+
 	/**
 	 * 
 	 */
 
 	public void handleTerminalInput() {
 		String line = null;
-		try {
-			out.write(name + ":  " + " Let´s go");
-			out.newLine();
-			out.flush();
-
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		while ((line = readString("--")) != null) {
-			if (line.equals("exit")) {
-				shutDown();
-				return;
-			}
-			try {
-				out.write(name + ":  " + line);
-				out.newLine();
-				out.flush();
-			} catch (IOException e) {
-				System.out.println("Could not write to outputstream, pipe broken!");
-				shutDown();
-			}
-		}
 	}
 
 	/**
 	 * 
-	 * @param host
-	 * @return
+	 * @param message
+	 * @throws IOException
 	 */
-
-	public InetAddress getIP(String host) {
-		InetAddress adress = null;
-		try {
-			adress = InetAddress.getByName(host);
-
-		} catch (UnknownHostException e) {
-			System.out.println(Error.UNKNOWN_HOST);
-		}
-		return adress;
-	}
-
-	/**
-	 * 
-	 * @param tekst
-	 * @return
-	 */
-	static public String readString(String tekst) {
-		System.out.print(tekst);
-		String antw = null;
-		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-			antw = in.readLine();
-		} catch (IOException e) {
-		}
-
-		return (antw == null) ? "" : antw;
-	}
-
-	/**
-	 * 
-	 * @param portString
-	 * @return
-	 */
-
-	public int getPort(String portString) {
-		int port = 0;
-		try {
-			port = Integer.parseInt(portString);
-		} catch (NumberFormatException e) {
-			System.out.println("sry mate");
-		}
-		return port;
+	public void send(String message) throws IOException {
+		out.write(message);
+		out.newLine();
+		out.flush();
 
 	}
 
@@ -173,16 +122,6 @@ public class ClientHandeler implements Runnable {
 	@Override
 	public void run() {
 
-		try {
-			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-			Scanner input = new Scanner(in);
-		} catch (IOException e) {
-			e.printStackTrace();
-
-		}
-
 	}
 
 	/**
@@ -192,6 +131,11 @@ public class ClientHandeler implements Runnable {
 	public void addClient(Client client) {
 		Server.waitingClients.add(client);
 
+	}
+
+	@Override
+	public int[] determineMove(Board board) {
+		return null;
 	}
 
 }

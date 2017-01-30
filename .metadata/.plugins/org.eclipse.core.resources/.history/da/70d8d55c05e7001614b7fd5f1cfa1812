@@ -1,0 +1,70 @@
+package networkConnection;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import Model.Board;
+import Model.Disc.Color;
+import Model.Player;
+import controller.Game;
+
+public class GameServer extends Thread {
+
+	private Board board;
+	private Map<Player, Color> players;
+	private int current = 0;
+	private Game game;
+
+	public GameServer(List<Player> playerlist) {
+		this.players = new LinkedHashMap<>();
+		for (int i = 0; i < playerlist.size(); i++) {
+			Player p = playerlist.get(i);
+			players.put(p, Color.values()[i]);
+		}
+
+	}
+
+	/**
+	 * 
+	 */
+
+	public void makeMove() {
+
+	}
+
+	/**
+	 * 
+	 * @param message
+	 */
+
+	private void notifyPlayers(String message) {
+		for (Player p : players.keySet()) {
+
+		}
+
+	}
+
+	/**
+	 * 
+	 */
+
+	public void run() {
+		Player[] player = players.keySet().toArray(new Player[100]);
+		game = new Game(player[0], player[1]);
+
+	}
+
+	/**
+	 * 
+	 */
+	private void play() {
+		current = (int) Math.round(Math.random());
+		while ()
+		
+		
+	}
+
+}

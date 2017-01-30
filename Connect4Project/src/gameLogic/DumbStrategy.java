@@ -23,8 +23,8 @@ public class DumbStrategy implements Strategy {
 		int[] list = new int[2];
 
 		do {
-			columnPosition = random.nextInt(4);
-			rowPosition = random.nextInt(4);
+			columnPosition = random.nextInt(3);
+			rowPosition = random.nextInt(3);
 
 			list[0] = rowPosition;
 			list[1] = columnPosition;

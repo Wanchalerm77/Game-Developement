@@ -20,6 +20,8 @@ public class HumanPlayer extends Player {
 
 	public void instructions() {
 		System.out.println("Where do you want to drop your disc? X - Y  :");
+		System.out.println("");
+		System.out.println("");
 	}
 
 	/**
@@ -31,6 +33,7 @@ public class HumanPlayer extends Player {
 
 	@Override
 	public int[] determineMove(Board board) {
+		board.showCopy();
 
 		int columnPosition = -1;
 		int rowPosition = -1;

@@ -57,7 +57,7 @@ public class Game {
 	 * @return
 	 */
 
-	private boolean readBoolean(String prompt, String yes, String no) {
+	public boolean readBoolean(String prompt, String yes, String no) {
 		String answer;
 		do {
 			System.out.print(prompt);
@@ -78,7 +78,6 @@ public class Game {
 	private void reset() {
 		current = 0;
 		board.reset();
-		board.showCopy();
 	}
 
 	/**
@@ -465,7 +464,7 @@ public class Game {
 	}
 
 	/**
-	 * Checks whether one of the players has a row, column or a diagonal
+	 * Checks whboaether one of the players has a row, column or a diagonal
 	 * 
 	 * @param d
 	 * @return True if any of these statements are true
@@ -481,7 +480,7 @@ public class Game {
 	 * 
 	 */
 
-	protected void play() {
+	public void play() {
 
 		current = (int) Math.round(Math.random());
 		while (!gameOver()) {

@@ -8,7 +8,7 @@ public abstract class Player {
 	private Disc.Color disc;
 	private int score;
 	public Board board;
-	public int[] xy;
+	public int[] xy = new int[2];
 
 	/*
 	 * Constructor creates a Player with a name and a disc
@@ -57,7 +57,6 @@ public abstract class Player {
 		int y = xy[1];
 
 		board.dropDisc(board, x, y, getDisc());
-		board.showCopy();
 
 	}
 
