@@ -6,13 +6,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
-import Model.Board;
 import Model.Disc.Color;
 import Model.Player;
+import gameLogic.HumanPlayer;
 import networkConnection.Client.Error;
 
-public class ClientHandeler extends Player implements Runnable {
+public class ClientHandeler implements Runnable {
 
 	private Socket socket;
 	private BufferedReader in;
@@ -95,12 +96,60 @@ public class ClientHandeler extends Player implements Runnable {
 
 	}
 
+	public void processJoinRoom() {
+		System.out.println("What shall be your ingame name?");
+		Scanner nameInput = new Scanner(System.in);
+		String name = null;
+
+		do {
+			if (nameInput.hasNext()) {
+				name = nameInput.next();
+				if (name.equals(null) || name.equals("")) {
+					System.out.println("Enter an appropriate name alsjebelief");
+				}
+				System.out.println("Please enter a valid name");
+				Player p1 = new HumanPlayer(name, Color.BLUE);
+			}
+		} while (name.equals("") || name.equals(null));
+
+	}
+
+	public boolean isCommand(String command) {
+		return command.equals(SENDCAPABILITIES) || command.equals(JOINROOM) || command.equals(LEAVEROOM)
+				|| command.equals(MAKEMOVE) || command.equals(GETROOMLIST) || command.equals(REQUESTLEADERBOARD)
+				|| command.equals(SENDMESSAGE);
+	}
+
 	/**
 	 * 
 	 */
 
 	public void handleTerminalInput() {
+		welcomeMessage();
 		String line = null;
+		Scanner input = new Scanner(System.in);
+		String[] words = new String[100];
+		do {
+
+			if (input.hasNextLine()) {
+				line = input.nextLine();
+				if (line.equals("") || line.equals(null)) {
+					System.out.println("Please enter a valid command");
+				}
+				words = line.split(" ");
+				switch (words[0]) {
+				case JOINROOM:
+					processJoinRoom();
+
+				}
+			}
+
+		} while (!isCommand(words[0]) || line.equals(null) || line.equals(""));
+
+	}
+
+	public void welcomeMessage() {
+		System.out.println("Welcome User, how can i serve you?");
 	}
 
 	/**
@@ -121,6 +170,7 @@ public class ClientHandeler extends Player implements Runnable {
 
 	@Override
 	public void run() {
+		handleTerminalInput();
 
 	}
 
@@ -129,13 +179,7 @@ public class ClientHandeler extends Player implements Runnable {
 	 * @param client
 	 */
 	public void addClient(Client client) {
-		Server.waitingClients.add(client);
 
-	}
-
-	@Override
-	public int[] determineMove(Board board) {
-		return null;
 	}
 
 }

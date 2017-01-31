@@ -28,7 +28,8 @@ public class Server {
 
 	private static final String USAGE = "<port>";
 	public static List<Client> clients;
-	public static List<Client> waitingClients;
+	public static List<ClientHandeler> waitingClients;
+	private Client client;
 
 	public int port;
 
@@ -61,18 +62,21 @@ public class Server {
 		try {
 			ss = new ServerSocket(port);
 			System.out.println("Server starting");
-			while (true) {
-				clientsocket = ss.accept();
+			clientsocket = ss.accept();
+			System.out.println("Connected");
 
-				Runnable r = new ClientHandeler(clientsocket);
-				Thread t = new Thread(r);
-				t.start();
-			}
 		} catch (IOException e) {
 			System.out.println("ERROR: Could not create a serversocket on port " + port);
 		}
 
-		System.out.println("LOL");
+		try {
+			ClientHandeler client = new ClientHandeler(clientsocket);
+			Thread testRun = new Thread(client);
+			testRun.start();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 

@@ -14,7 +14,6 @@ public class Game {
 	private Board board;
 
 	private PlayerList playerlist;
-
 	private int current;
 
 	/**

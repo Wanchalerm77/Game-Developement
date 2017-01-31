@@ -10,12 +10,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
-import Model.Disc.Color;
 import Model.Player;
-import gameLogic.ComputerPlayer;
-import gameLogic.DumbStrategy;
-import gameLogic.HumanPlayer;
-import gameLogic.SmartStrategy;
 
 public class Client {
 
@@ -25,6 +20,7 @@ public class Client {
 	private Player player;
 	private static final String USAGE = "Arguments: <name> <adress> <port>";
 	private static final String EXIT = "exit";
+	private String name;
 
 	public enum Error {
 		NONE, SOCKET_ERROR, PLAYER_DISCONNECTED, CONNECTION_PROBLEM, IO_EXCEPTION, UNKNOWN_HOST
@@ -38,25 +34,42 @@ public class Client {
 	 * @param socket
 	 */
 
-	public Client(Socket socket, Player player) throws IOException {
+	public Client(String name, Socket socket) throws IOException {
 		this.socket = socket;
-		this.player = player;
 
 		writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 		reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 	}
 
-	public Player getPlayer() {
-		return player;
+	/**
+	 * public Player getPlayer() { return player; }
+	 */
+
+	public String getName() {
+		return name;
+	}
+
+	public void send(String message) {
+		try {
+			writer.write(message);
+			writer.newLine();
+			writer.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public static void main(String[] args) throws IOException {
-		if (args.length != 3) {
+		Scanner input = new Scanner(System.in);
+		String line = input.nextLine();
+		String[] words = line.split(" ");
+
+		if (words.length != 3) {
 			System.out.println(USAGE);
 			System.exit(0);
 		}
-
 		InetAddress addres = null;
 		int port = 0;
 		Socket socket = new Socket();
@@ -64,59 +77,54 @@ public class Client {
 		//
 
 		try {
-			addres = InetAddress.getByName(args[1]);
+			addres = InetAddress.getByName(words[1]);
 		} catch (UnknownHostException e) {
 			System.out.println(USAGE);
-			System.out.println("ERROR: host " + args[1] + " unkown");
+			System.out.println("ERROR: host " + words[1] + " unkown");
 			System.exit(0);
 		}
 
 		//
 		try {
-			port = Integer.parseInt(args[2]);
+			port = Integer.parseInt(words[2]);
 
 		} catch (NumberFormatException e) {
 			System.out.println(USAGE);
-			System.out.println("ERROR: port " + args[2] + " is not an integer");
+			System.out.println("ERROR: port " + words[2] + " is not an integer");
 			System.exit(0);
 		}
 		try {
 			socket = new Socket(addres, port);
 		} catch (IOException e) {
 			System.out.println("ERROR: could not create a socket on" + addres + " and port " + port);
-		}
-
-		Player player;
-		Client client;
-		switch (args[0]) {
-		case "-S":
-			player = new ComputerPlayer(Color.GREEN, new SmartStrategy());
-			client = new Client(socket, player);
-			break;
-		case "-N":
-			player = new ComputerPlayer(Color.PURPLE, new DumbStrategy());
-			client = new Client(socket, player);
-			break;
-		default:
-			player = new HumanPlayer(args[0], Color.RED);
-			client = new Client(socket, player);
-			break;
 
 		}
 
-		try {
-			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-			BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			Scanner input = new Scanner(reader);
+		/**
+		 * Player player; Client client; switch (args[0]) { case "-S": player =
+		 * new ComputerPlayer("Smart", Color.GREEN, new SmartStrategy()); client
+		 * = new Client(socket, player); break; case "-N": player = new
+		 * ComputerPlayer("Dumb", Color.PURPLE, new DumbStrategy()); client =
+		 * new Client(socket, player); break; default: player = new
+		 * HumanPlayer(args[0], Color.RED); client = new Client(socket, player);
+		 * break;
+		 * 
+		 * }
+		 */
 
-			while (input.hasNextLine()) {
-				String line = input.nextLine();
-				System.out.println(line);
-			}
-
-		} catch (IOException e) {
-
-		}
+		/**
+		 * try { BufferedWriter writer = new BufferedWriter(new
+		 * OutputStreamWriter(socket.getOutputStream())); BufferedReader reader
+		 * = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		 * Scanner input = new Scanner(reader);
+		 * 
+		 * while (input.hasNextLine()) { String line = input.nextLine();
+		 * System.out.println(line); }
+		 * 
+		 * } catch (IOException e) {
+		 * 
+		 * }
+		 */
 
 	}
 }

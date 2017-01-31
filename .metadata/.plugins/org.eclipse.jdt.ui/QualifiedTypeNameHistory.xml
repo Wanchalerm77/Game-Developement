@@ -39,7 +39,7 @@
 <fullyQualifiedTypeName name="Model.Disc.Color"/>
 <fullyQualifiedTypeName name="Model.Board"/>
 <fullyQualifiedTypeName name="networkConnection.ClientHandeler"/>
-<fullyQualifiedTypeName name="gameLogic.DumbStrategy"/>
 <fullyQualifiedTypeName name="controller.Game"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="gameLogic.DumbStrategy"/>
 </qualifiedTypeNameHistroy>
