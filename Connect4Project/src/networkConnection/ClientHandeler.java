@@ -6,10 +6,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import Model.Disc.Color;
 import Model.Player;
+import controller.Game;
 import gameLogic.HumanPlayer;
 import networkConnection.Client.Error;
 
@@ -22,6 +25,8 @@ public class ClientHandeler implements Runnable {
 	private Server server;
 	private Client client;
 	private Color color;
+	private Game game;
+	private List<Player> waitingClients = new ArrayList<>(10);
 
 	// Client to Server Commands //
 	public static final String SENDCAPABILITIES = "sendCapabilities";
@@ -107,14 +112,48 @@ public class ClientHandeler implements Runnable {
 				if (name.equals(null) || name.equals("")) {
 					System.out.println("Enter an appropriate name alsjebelief");
 				}
-				System.out.println("Please enter a valid name");
 				Player p1 = new HumanPlayer(name, Color.BLUE);
+				waitingClients.add(p1);
+				checkFullRoom();
 			}
 		} while (name.equals("") || name.equals(null));
 
 	}
 
+	public void checkFullRoom() {
+		String line = null;
+		if (waitingClients.size() != 2) {
+			System.out.println("Wait for another Player to join");
+			return;
+		}
+		if (!waitingClients.equals(null) && !waitingClients.equals(null)) {
+			System.out.println("Game is ready, start game? (y/n)");
+			try (Scanner decideGame = new Scanner(System.in)) {
+				if (decideGame.hasNext()) {
+					line = decideGame.next();
+				}
+				switch (line) {
+				case "y":
+					game = new Game(waitingClients.get(0), waitingClients.get(1));
+					waitingClients.remove(0);
+					waitingClients.remove(1);
+
+				}
+
+			}
+
+		}
+
+	}
+
+	/**
+	 * 
+	 * @param command
+	 * @return
+	 */
+
 	public boolean isCommand(String command) {
+
 		return command.equals(SENDCAPABILITIES) || command.equals(JOINROOM) || command.equals(LEAVEROOM)
 				|| command.equals(MAKEMOVE) || command.equals(GETROOMLIST) || command.equals(REQUESTLEADERBOARD)
 				|| command.equals(SENDMESSAGE);
@@ -132,10 +171,8 @@ public class ClientHandeler implements Runnable {
 		do {
 
 			if (input.hasNextLine()) {
-				line = input.nextLine();
-				if (line.equals("") || line.equals(null)) {
-					System.out.println("Please enter a valid command");
-				}
+				line = processInput(input.nextLine());
+
 				words = line.split(" ");
 				switch (words[0]) {
 				case JOINROOM:
@@ -146,6 +183,14 @@ public class ClientHandeler implements Runnable {
 
 		} while (!isCommand(words[0]) || line.equals(null) || line.equals(""));
 
+	}
+
+	public String processInput(String line) {
+		if (line.equals("") || line.equals(null)) {
+			System.out.println("Please enter a valid command");
+			return "";
+		}
+		return line;
 	}
 
 	public void welcomeMessage() {
@@ -170,15 +215,9 @@ public class ClientHandeler implements Runnable {
 
 	@Override
 	public void run() {
-		handleTerminalInput();
-
-	}
-
-	/**
-	 * 
-	 * @param client
-	 */
-	public void addClient(Client client) {
+		while (true) {
+			handleTerminalInput();
+		}
 
 	}
 
