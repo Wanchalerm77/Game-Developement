@@ -160,7 +160,7 @@ public class ClientHandeler implements Runnable {
 	}
 
 	/**
-	 * Reads scanner input and evaluates what to do next
+	 * 
 	 */
 
 	public void handleTerminalInput() {
@@ -176,6 +176,7 @@ public class ClientHandeler implements Runnable {
 				switch (words[0]) {
 				case JOINROOM:
 					processJoinRoom();
+
 				case SENDCAPABILITIES:
 					processCap();
 
@@ -185,17 +186,6 @@ public class ClientHandeler implements Runnable {
 		} while (!isCommand(words[0]) || line.equals(null) || line.equals(""));
 
 	}
-
-	/**
-	 * Enables the current client to send the other player a message
-	 */
-	public void proccesSendMessage() {
-
-	}
-
-	/**
-	 * Sends the capabilities of the I DUNNO LOL
-	 */
 
 	public void processCap() {
 
@@ -220,7 +210,6 @@ public class ClientHandeler implements Runnable {
 	}
 
 	/**
-	 * Send a string to the outputstream
 	 * 
 	 * @param message
 	 * @throws IOException

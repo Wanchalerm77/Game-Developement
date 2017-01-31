@@ -185,16 +185,18 @@ public class ClientHandeler implements Runnable {
 		} while (!isCommand(words[0]) || line.equals(null) || line.equals(""));
 
 	}
-
+	
+	
+	
 	/**
-	 * Enables the current client to send the other player a message
-	 */
+	 *  Enables the current client to send the other player a message
+	 */	
 	public void proccesSendMessage() {
-
+		
+		
 	}
-
 	/**
-	 * Sends the capabilities of the I DUNNO LOL
+	 *  Sends the capabilities of the I DUNNO LOL
 	 */
 
 	public void processCap() {
