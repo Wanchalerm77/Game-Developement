@@ -32,7 +32,7 @@ public class HumanPlayer extends Player {
 	 */
 
 	@Override
-	public synchronized int[] determineMove(Board board) {
+	public int[] determineMove(Board board) {
 		board.showCopy();
 
 		int columnPosition = -1;

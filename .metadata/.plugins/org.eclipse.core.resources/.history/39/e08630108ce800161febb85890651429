@@ -60,12 +60,11 @@ public class GameServer extends Thread {
 	 */
 
 	public void run() {
-		board = new Board();
-		synchronized (board) {
-			game = new Game(listOfClients.get(0), listOfClients.get(1));
-			game.start();
-
-		}
+		synchronized (game) {
+			
+				game = new Game(listOfClients.get(0), listOfClients.get(1));
+		game.start();
+		
 
 	}
 
