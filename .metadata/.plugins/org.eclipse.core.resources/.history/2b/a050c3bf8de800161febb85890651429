@@ -60,6 +60,7 @@ public class GameServer extends Thread {
 	 */
 
 	public void run() {
+		board = new Board();
 		game = new Game(listOfClients.get(0), listOfClients.get(1));
 		game.start();
 	}
