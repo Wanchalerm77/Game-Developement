@@ -10,10 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import Model.Disc.Color;
-import Model.Player;
-import controller.Game;
-import gameLogic.HumanPlayer;
 import networkConnection.Client.Error;
 
 public class ClientHandeler implements Runnable {
@@ -21,12 +17,7 @@ public class ClientHandeler implements Runnable {
 	private Socket socket;
 	private BufferedReader in;
 	private BufferedWriter out;
-	private String name;
-	private Server server;
-	private Client client;
-	private Color color;
-	private Game game;
-	private List<Player> waitingClients = new ArrayList<>();
+	private List<String> waitingClients = new ArrayList<>();
 
 	// Client to Server Commands //
 	public static final String SENDCAPABILITIES = "sendCapabilities";
@@ -104,21 +95,25 @@ public class ClientHandeler implements Runnable {
 	public void processJoinRoom() {
 		System.out.println("What shall be your ingame name?");
 		Scanner nameInput = new Scanner(System.in);
-		String name = null;
+		String name = "";
 
 		do {
 			if (nameInput.hasNext()) {
 				name = nameInput.next();
-				if (name.equals(null) || name.equals("")) {
+				if (name.equals("")) {
 					System.out.println("Enter an appropriate name alsjebelief");
 				}
-				Player p1 = new HumanPlayer(name, Color.BLUE);
-				waitingClients.add(p1);
+				waitingClients.add(name);
+
 				checkFullRoom();
 			}
-		} while (name.equals("") || name.equals(null));
+		} while (name.equals(""));
 
 	}
+
+	/**
+	* 
+	*/
 
 	public void checkFullRoom() {
 		String line = null;
@@ -126,19 +121,16 @@ public class ClientHandeler implements Runnable {
 			System.out.println("Wait for another Player to join");
 			return;
 		}
-		if (!waitingClients.equals(null) && !waitingClients.equals(null)) {
-			System.out.println("Game is ready, start game? (y/n)");
-			try (Scanner decideGame = new Scanner(System.in)) {
-				if (decideGame.hasNext()) {
-					line = decideGame.next();
-				}
-				switch (line) {
-				case "y":
-					Thread t1 = new Thread(new GameServer(waitingClients.get(0), waitingClients.get(1)));
-					t1.start();
-					waitingClients.clear();
-
-				}
+		System.out.println("Game is ready, start game? (y/n)");
+		try (Scanner decideGame = new Scanner(System.in)) {
+			if (decideGame.hasNext()) {
+				line = decideGame.next();
+			}
+			switch (line) {
+			case "y":
+				Thread t1 = new Thread(new GameServer(waitingClients.get(0), waitingClients.get(1)));
+				t1.start();
+				waitingClients.clear();
 
 			}
 
