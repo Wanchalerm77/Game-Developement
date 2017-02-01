@@ -61,15 +61,21 @@ public class Client {
 
 	}
 
-	public static void main(String[] args) throws IOException {
-		Scanner input = new Scanner(System.in);
-		String line = input.nextLine();
-		String[] words = line.split(" ");
+	public static void instructions() {
+		System.out.println("Welcome, to connect please enter: " + USAGE);
+	}
 
-		if (words.length != 3) {
-			System.out.println(USAGE);
-			System.exit(0);
-		}
+	public static void main(String[] args) throws IOException {
+		String[] words;
+
+		do {
+
+			instructions();
+			Scanner input = new Scanner(System.in);
+			String line = input.nextLine();
+			words = line.split(" ");
+		} while (words.length != 3);
+
 		InetAddress addres = null;
 		int port = 0;
 		Socket socket = new Socket();

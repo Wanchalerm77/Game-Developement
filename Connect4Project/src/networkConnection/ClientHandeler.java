@@ -26,7 +26,7 @@ public class ClientHandeler implements Runnable {
 	private Client client;
 	private Color color;
 	private Game game;
-	private List<Player> waitingClients = new ArrayList<>(10);
+	private List<Player> waitingClients = new ArrayList<>();
 
 	// Client to Server Commands //
 	public static final String SENDCAPABILITIES = "sendCapabilities";
@@ -134,9 +134,9 @@ public class ClientHandeler implements Runnable {
 				}
 				switch (line) {
 				case "y":
-					game = new Game(waitingClients.get(0), waitingClients.get(1));
-					waitingClients.remove(0);
-					waitingClients.remove(1);
+					Thread t1 = new Thread(new GameServer(waitingClients.get(0), waitingClients.get(1)));
+					t1.start();
+					waitingClients.clear();
 
 				}
 
@@ -153,6 +153,7 @@ public class ClientHandeler implements Runnable {
 	 */
 
 	public boolean isCommand(String command) {
+		assert !command.equals(null);
 
 		return command.equals(SENDCAPABILITIES) || command.equals(JOINROOM) || command.equals(LEAVEROOM)
 				|| command.equals(MAKEMOVE) || command.equals(GETROOMLIST) || command.equals(REQUESTLEADERBOARD)
@@ -165,7 +166,7 @@ public class ClientHandeler implements Runnable {
 
 	public void handleTerminalInput() {
 		welcomeMessage();
-		String line = null;
+		String line = "";
 		Scanner input = new Scanner(System.in);
 		String[] words = new String[100];
 		do {
@@ -182,7 +183,7 @@ public class ClientHandeler implements Runnable {
 				}
 			}
 
-		} while (!isCommand(words[0]) || line.equals(null) || line.equals(""));
+		} while (line.equals("") || line.equals(null) || !isCommand(line));
 
 	}
 

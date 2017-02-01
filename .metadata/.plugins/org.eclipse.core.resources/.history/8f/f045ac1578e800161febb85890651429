@@ -1,0 +1,32 @@
+package networkConnection;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import Model.Board;
+import Model.Player;
+import controller.Game;
+
+public class GameServer extends Thread {
+
+	private Board board;
+	private int current = 0;
+	private Game game;
+	private List<Player> listOfClients;
+
+	public GameServer(Player p1, Player p2) {
+		listOfClients = new ArrayList<>();
+		listOfClients.add(p1);
+		listOfClients.add(p2);
+
+	}
+
+	/**
+	 * 
+	 */
+
+	public void run() {
+
+	}
+
+}

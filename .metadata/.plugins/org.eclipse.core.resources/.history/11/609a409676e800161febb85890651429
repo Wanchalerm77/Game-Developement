@@ -1,0 +1,247 @@
+package networkConnection;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import Model.Disc.Color;
+import Model.Player;
+import controller.Game;
+import gameLogic.HumanPlayer;
+import networkConnection.Client.Error;
+
+public class ClientHandeler implements Runnable {
+
+	private Socket socket;
+	private BufferedReader in;
+	private BufferedWriter out;
+	private String name;
+	private Server server;
+	private Client client;
+	private Color color;
+	private Game game;
+	private List<Player> waitingClients = new ArrayList<>(10);
+
+	// Client to Server Commands //
+	public static final String SENDCAPABILITIES = "sendCapabilities";
+
+	public static final String JOINROOM = "joinRoom";
+
+	public static final String GETROOMLIST = "getRoomList";
+
+	public static final String LEAVEROOM = "leaveRoom";
+
+	public static final String MAKEMOVE = "makeMove";
+
+	public static final String SENDMESSAGE = "sendMessage";
+
+	public static final String REQUESTLEADERBOARD = "requestLeaderboard";
+
+	// ------------------------------------------------------------------//
+
+	public static final String SERVERCAPABILITIES = "serverCapabilities";
+
+	public static final String SENDLISTROOMS = "sendListRooms";
+
+	public static final String ASSIGNID = "assignID";
+
+	public static final String STARTGAME = "startGame";
+
+	public static final String TURNOFPLAYER = "playerTurn";
+
+	public static final String NOTIFYMOVE = "notifyMove";
+
+	public static final String NOTIFYEND = "notifyEnd";
+
+	public static final String ERROR = "error";
+
+	public static final String NOTIFYMESSAGE = "notifyMessage";
+
+	public static final String SENDLEADERBOARD = "sendLeaderBoard";
+
+	// -----------------------------------------------------------//
+
+	/**
+	 * 
+	 * @param socket
+	 * @throws IOException
+	 */
+
+	public ClientHandeler(Socket socket) throws IOException {
+		this.socket = socket;
+
+		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+	}
+
+	/**
+	 * 
+	 */
+
+	public void shutDown() {
+		try {
+			socket.close();
+		} catch (IOException e) {
+			System.out.println(Error.IO_EXCEPTION);
+
+		}
+	}
+
+	public void processMove(String line) {
+		String[] words = line.split(" ");
+		int x = Integer.parseInt(words[1]);
+		int y = Integer.parseInt(words[2]);
+
+	}
+
+	public void processJoinRoom() {
+		System.out.println("What shall be your ingame name?");
+		Scanner nameInput = new Scanner(System.in);
+		String name = null;
+
+		do {
+			if (nameInput.hasNext()) {
+				name = nameInput.next();
+				if (name.equals(null) || name.equals("")) {
+					System.out.println("Enter an appropriate name alsjebelief");
+				}
+				Player p1 = new HumanPlayer(name, Color.BLUE);
+				waitingClients.add(p1);
+				checkFullRoom();
+			}
+		} while (name.equals("") || name.equals(null));
+
+	}
+
+	public void checkFullRoom() {
+		String line = null;
+		if (waitingClients.size() != 2) {
+			System.out.println("Wait for another Player to join");
+			return;
+		}
+		if (!waitingClients.equals(null) && !waitingClients.equals(null)) {
+			System.out.println("Game is ready, start game? (y/n)");
+			try (Scanner decideGame = new Scanner(System.in)) {
+				if (decideGame.hasNext()) {
+					line = decideGame.next();
+				}
+				switch (line) {
+				case "y":
+					game = new Game(waitingClients.get(0), waitingClients.get(1));
+					waitingClients.clear();
+
+				}
+
+			}
+
+		}
+
+	}
+
+	/**
+	 * 
+	 * @param command
+	 * @return
+	 */
+
+	public boolean isCommand(String command) {
+		assert !command.equals(null);
+
+		return command.equals(SENDCAPABILITIES) || command.equals(JOINROOM) || command.equals(LEAVEROOM)
+				|| command.equals(MAKEMOVE) || command.equals(GETROOMLIST) || command.equals(REQUESTLEADERBOARD)
+				|| command.equals(SENDMESSAGE);
+	}
+
+	/**
+	 * Reads scanner input and evaluates what to do next
+	 */
+
+	public void handleTerminalInput() {
+		welcomeMessage();
+		String line = null;
+		Scanner input = new Scanner(System.in);
+		String[] words = new String[100];
+		do {
+
+			if (input.hasNextLine()) {
+				line = processInput(input.nextLine());
+				words = line.split(" ");
+				switch (words[0]) {
+				case JOINROOM:
+					processJoinRoom();
+				case SENDCAPABILITIES:
+					processCap();
+
+				}
+			}
+
+		} while (line.equals(""));
+
+	}
+
+	/**
+	 * Enables the current client to send the other player a message
+	 */
+	public void proccesSendMessage() {
+
+	}
+
+	/**
+	 * Sends the capabilities of the I DUNNO LOL
+	 */
+
+	public void processCap() {
+
+	}
+
+	/**
+	 * 
+	 * @param line
+	 * @return
+	 */
+
+	public String processInput(String line) {
+		if (line.equals("") || line.equals(null)) {
+			System.out.println("Please enter a valid command");
+			return "";
+		}
+		return line;
+	}
+
+	public void welcomeMessage() {
+		System.out.println("Welcome User, how can i serve you?");
+	}
+
+	/**
+	 * Send a string to the outputstream
+	 * 
+	 * @param message
+	 * @throws IOException
+	 */
+	public void send(String message) throws IOException {
+		out.write(message);
+		out.newLine();
+		out.flush();
+
+	}
+
+	/**
+	 * 
+	 */
+
+	@Override
+	public void run() {
+		while (true) {
+			handleTerminalInput();
+		}
+
+	}
+
+}

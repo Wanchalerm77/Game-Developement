@@ -114,6 +114,10 @@ public class Board extends Observable {
 	 */
 
 	public boolean canDrop(int x, int y) {
+		if (x > 3 || y > 3) {
+			return false;
+		}
+
 		boolean test = false;
 		for (Color[][] c : allLayers) {
 			if (c[x][y].equals(Color.EMPTY)) {
